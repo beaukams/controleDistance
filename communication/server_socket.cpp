@@ -2,26 +2,8 @@
 * AUTHORS: 
 */
 //Si nous sommes sous Windows
-#if defined (WIN32)
-	#include <winsock2.h>
-  	typedef int socklen_t;
-
-#elif defined (linux)
-	#include <sys/types.h>
-	#include <sys/socket.h>
-	#include <netinet/in.h>
-	#include <arpa/inet.h>
-	#include <unistd.h>
-
-	#define	closesocket(param) close(param) 
-	#define	INVALID_SOCKET -­1
-	#define	SOCKET_ERROR -­1
-
-	typedef	int	SOCKET;
-	typedef	struct sockaddr_in SOCKADDR_IN;
-	typedef	struct sockaddr	SOCKADDR;
-
-#endif
+#include <winsock2.h>
+typedef int socklen_t;
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +12,7 @@
 
 #define PORT 20019
 
-
+void creer
 
 
 void main(int argc, char **args){
@@ -43,7 +25,7 @@ void main(int argc, char **args){
 	//creation et parametrage du socket
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 	SOCKET csock;
-	SOCKADDR_IN ssin, csin;
+	SOCKADDR_IN ssin, ccsin;
 	ssin.sin_addr.s_addr = inet_addr("127.0.0.1");
 	ssin.sin_family = AF_INET;
 	ssin.sin_port = htons(PORT);
@@ -56,8 +38,8 @@ void main(int argc, char **args){
 	listen(sock, 5);	
 
 	socklen_t taille = sizeof(csin);
-	csock = accept(sock, (SOCKADDR*)&csin, &taille);
-	printf("connexion du client %s:%d...\n", inet_ntoa(csin.sin_addr), htons(csin.sin_port));
+	csock = accept(sock, (SOCKADDR*)&ccsin, &taille);
+	printf("connexion du client %s:%d...\n", inet_ntoa(ccsin.sin_addr), htons(ccsin.sin_port));
 	//fermer la connexion
 	printf("fermeture de la socket client\n");
 	closesocket(csock);
