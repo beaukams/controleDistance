@@ -8,20 +8,55 @@ typedef int socklen_t;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 //#include <conio.h>
 
 #define PORT 20019
 
-void creer
+void envoie(char *msg, SOCKET sock){
+	int taille = (int)strlen(msg)+1;
+	if(send(sock, &taille, sizeof(taille), 0) != -1){
+		send(sock, msg, taille, 0);
+	}
+}
+
+char* recoit(SOCKET* sock){
+	char *recu; 
+	int err, taille;
+
+	err=recv(sock, &taille, sizeof(taille), 0); //la taille des donnees
+	if(err != -1){
+		recv(sock, recu, sizeof(taille), 0); //reception des donnees
+	}
+	
+		
+	
+
+	return res;
+}
+
+void interpretor(char *data){
+	
+}
+
+void* un_client(void * sock){
+	char* msg= "";
+	do{
+		msg = recoit((int) sock);
+	}while( strcmp(msg, "EXIT"));
+
+	//fermer la connexion
+	printf("fermeture de la socket client\n");
+	closesocket(csock);
+}
 
 
 void main(int argc, char **args){
 	
-	#if defined (WIN32)
-		WSADATA	WSAData;
-  		WSAStartup(MAKEWORD(2,2),&WSAData);
-	#endif
-
+	
+	WSADATA	WSAData;
+  	WSAStartup(MAKEWORD(2,2),&WSAData);
+	
 	//creation et parametrage du socket
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 	SOCKET csock;
@@ -34,20 +69,29 @@ void main(int argc, char **args){
   	printf("Demarrage du serveur sur le port %d...\n", PORT);	
 	
 	//etablir une communication
-	bind(sock, (SOCKADDR*) &ssin, sizeof(ssin));
+	int err_bind = bind(sock, (SOCKADDR*) &ssin, sizeof(ssin));
 	listen(sock, 5);	
 
 	socklen_t taille = sizeof(csin);
-	csock = accept(sock, (SOCKADDR*)&ccsin, &taille);
-	printf("connexion du client %s:%d...\n", inet_ntoa(ccsin.sin_addr), htons(ccsin.sin_port));
-	//fermer la connexion
-	printf("fermeture de la socket client\n");
-	closesocket(csock);
+
+	while(true){
+		csock = accept(sock, (SOCKADDR*)&ccsin, &taille);
+
+		printf("connexion du client %s:%d...\n", inet_ntoa(ccsin.sin_addr), htons(ccsin.sin_port));
+
+		//creation d'un thread pour gerer le client
+		pthread_t client;
+		int err_thr = pthread_create(&client, NULL, un_client, (void*) &csock);
+
+		
+	}
+	
 
 	printf("fermeture de la socket serveur\n");
-	closesocket(sock);
 
-  	#if defined	(WIN32)
-		WSACleanup();
-	#endif
+
+	closesocket(sock);
+  	
+	WSACleanup();
+	
 }
