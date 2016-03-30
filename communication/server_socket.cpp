@@ -33,21 +33,21 @@ char* recoit(SOCKET* sock){
 	return res;
 }
 
-void interpretor(char *data){
-	char **datas = str_split(data, ' ');
-	char *commande = datas[0];
-	
-}
 
 void* un_client(void * sock){
 	char* msg= "";
 	do{
 		msg = recoit((int) sock);
-	}while( strcmp(msg, "EXIT"));
+		msg = str_concatene("COMMANDE ",msg);
+		system(msg);
+	}while( strcmp(msg, "EXIT") || strcmp(msg, "exit"));
+
 
 	//fermer la connexion
 	printf("fermeture de la socket client\n");
 	closesocket(csock);
+
+	pthread_exit(NULL);
 }
 
 
@@ -79,8 +79,6 @@ void main(int argc, char **args){
 
 		printf("connexion du client %s:%d...\n", inet_ntoa(ccsin.sin_addr), htons(ccsin.sin_port));
 
-		//reception
-		system("pwd ");
 		//creation d'un thread pour gerer le client
 		pthread_t client;
 		int err_thr = pthread_create(&client, NULL, un_client, (void*) &csock);

@@ -13,6 +13,19 @@ char * concatene(char* str, char c){
 	return res;
 }
 
+char * str_concatene(char* str, char* strc){
+	int t=strlen(str);
+	int tc=strlen(strc);
+	char * res = (char*) malloc(sizeof(char)*(t+tc));
+	int i=0; 
+	for(i=0; i<t; i++)
+		res[i] = str [i];
+	for(i=0; i<tc; i++)
+		res[i+t] = strc [i];
+	
+	return res;
+}
+
 char** str_split(char* str, char delim){
 	
 	int t = strlen(str);
