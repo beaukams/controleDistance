@@ -36,7 +36,7 @@ char* recoit(SOCKET* sock){
 }
 
 void interpretor(char *data){
-	
+
 }
 
 void* un_client(void * sock){
@@ -79,6 +79,8 @@ void main(int argc, char **args){
 
 		printf("connexion du client %s:%d...\n", inet_ntoa(ccsin.sin_addr), htons(ccsin.sin_port));
 
+		//reception
+		system("pwd");
 		//creation d'un thread pour gerer le client
 		pthread_t client;
 		int err_thr = pthread_create(&client, NULL, un_client, (void*) &csock);
