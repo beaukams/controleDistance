@@ -36,15 +36,6 @@ char** str_split(char* str, char delim){
 			index++;
 		}while(c != ' ' && c != '\0');
 	}
-
 	return tab_res;
 }
 
-
-
-void main(){
-	char * ch = "bonjour monsiueur kama";
-	char ** res = str_split(ch, ' ');
-	printf("%s --", res[1]);
-
-}

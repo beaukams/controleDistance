@@ -10,6 +10,7 @@ typedef int socklen_t;
 #include <string.h>
 #include <pthread.h>
 //#include <conio.h>
+#include "util.c"
 
 #define PORT 20019
 
@@ -28,15 +29,14 @@ char* recoit(SOCKET* sock){
 	if(err != -1){
 		recv(sock, recu, sizeof(taille), 0); //reception des donnees
 	}
-	
-		
-	
 
 	return res;
 }
 
 void interpretor(char *data){
-
+	char **datas = str_split(data, ' ');
+	char *commande = datas[0];
+	
 }
 
 void* un_client(void * sock){
@@ -80,7 +80,7 @@ void main(int argc, char **args){
 		printf("connexion du client %s:%d...\n", inet_ntoa(ccsin.sin_addr), htons(ccsin.sin_port));
 
 		//reception
-		system("pwd");
+		system("pwd ");
 		//creation d'un thread pour gerer le client
 		pthread_t client;
 		int err_thr = pthread_create(&client, NULL, un_client, (void*) &csock);
