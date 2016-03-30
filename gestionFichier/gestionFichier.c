@@ -110,3 +110,49 @@ char *str_sub (const char *s, unsigned int start, unsigned int end)
    }
    return new_s;
 }
+
+void listerUser(){
+  fichier = fopen("fichierUser.txt", "r");
+    char chaine[1000] = "";
+    if (fichier == NULL)
+    {
+    printf("imosssible de lire le fichier");
+  }
+  while(fgets(chaine, 1000, fichier) != NULL){
+    int pos=search(chaine,':');
+    char* log=str_sub(chaine,0,pos-1);
+    char* c=str_sub(chaine,pos+1,strlen(chaine));
+    char* mdp=str_sub(c,0,search(c,':')-1);
+    char* rep=str_sub(c,search(c,':')+1,strlen(c));
+    printf("login:%s mot de passe:%s répertoire:%s \n",log,mdp,rep);
+  }
+
+  fclose(fichier);
+}
+
+void supprimerUser(char*login){
+  fichier = fopen("fichierUser.txt", "r");
+    char chaine[1000] = "";
+  FILE* copiefichier = NULL;
+  copiefichier = fopen("copieFichier.txt", "w");
+    if (fichier == NULL)
+    {
+      printf("imosssible de lire le fichier");
+  }
+  if (copiefichier == NULL)
+    {
+      printf("imosssible d ecrire sur le fichier");
+  }
+  while(fgets(chaine, 1000, fichier) != NULL){
+    int pos=search(chaine,':');
+    char* log=str_sub(chaine,0,pos-1);
+    if(strcmp(log, login)!=0){
+       fputs(chaine, copiefichier);
+    }
+  }
+
+  fclose(fichier);
+  fclose(copiefichier);
+  remove("fichierUser.txt");
+  rename("copieFichier.txt","fichierUser.txt");
+}
