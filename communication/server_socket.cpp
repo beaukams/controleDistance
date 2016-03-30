@@ -14,25 +14,6 @@ typedef int socklen_t;
 
 #define PORT 20019
 
-void envoie(char *msg, SOCKET sock){
-	int taille = (int)strlen(msg)+1;
-	if(send(sock, &taille, sizeof(taille), 0) != -1){
-		send(sock, msg, taille, 0);
-	}
-}
-
-char* recoit(SOCKET* sock){
-	char *recu; 
-	int err, taille;
-
-	err=recv(sock, &taille, sizeof(taille), 0); //la taille des donnees
-	if(err != -1){
-		recv(sock, recu, sizeof(taille), 0); //reception des donnees
-	}
-
-	return res;
-}
-
 
 void* un_client(void * sock){
 	char* msg= "";
@@ -40,6 +21,9 @@ void* un_client(void * sock){
 		msg = recoit((int) sock);
 		msg = str_concatene("COMMANDE ",msg);
 		system(msg);
+
+		//reponse
+		
 	}while( strcmp(msg, "EXIT") || strcmp(msg, "exit"));
 
 

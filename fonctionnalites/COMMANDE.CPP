@@ -4,6 +4,7 @@
 #include <string.h>
 #include <dos.h>
 #include <stddef.h>
+#include "FONCTIONNALITES.CPP"
 
 void interprete_commande(int argc, char** argv);
 

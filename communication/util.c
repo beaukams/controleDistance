@@ -3,6 +3,53 @@
 #include <string.h>
 #include <assert.h>
 
+/*************** les prototypes *************/
+void creeSocket(SOCKET *sock, SOCKADDR_IN *ssin, char * addr, int port);
+void fermeSocket(SOCKET *sock);
+void envoie(char *msg, SOCKET sock);
+char* recoit(SOCKET* sock);
+char * concatene(char* str, char c);
+char * str_concatene(char* str, char* strc);
+char** str_split(char* str, char delim);
+
+/************** les fonctions **************/
+
+void creeSocket(SOCKET *sock, SOCKADDR_IN *ssin, char * addr, int port){
+	WSADATA	WSAData;
+  	WSAStartup(MAKEWORD(2,2),&WSAData);
+  	*sock = socket(AF_INET, SOCK_STREAM, 0);
+	*ssin.sin_addr.s_addr = inet_addr(addr);
+	*ssin.sin_family = AF_INET;
+	*ssin.sin_port = htons(port);
+	connect(*sock, (SOCKADDR*) ssin, sizeof(*ssin));
+	printf("Connexion au serveur %s: %d...\n",inet_ntoa(*ssin.sin_addr), PORT);
+}
+
+void fermeSocket(SOCKET sock){
+	closesocket(sock);
+	printf("fermeture de la socket serveur\n");
+	WSACleanup();
+}
+
+void envoie(char *msg, SOCKET sock){
+	int taille = (int)strlen(msg)+1;
+	if(send(sock, &taille, sizeof(taille), 0) != -1){
+		send(sock, msg, taille, 0);
+	}
+}
+
+char* recoit(SOCKET* sock){
+	char *recu; 
+	int err, taille;
+
+	err=recv(sock, &taille, sizeof(taille), 0); //la taille des donnees
+	if(err != -1){
+		recv(sock, recu, sizeof(taille), 0); //reception des donnees
+	}
+
+	return res;
+}
+
 char * concatene(char* str, char c){
 	int t=strlen(str);
 	char * res = (char*) malloc(sizeof(char)*(t+1));
