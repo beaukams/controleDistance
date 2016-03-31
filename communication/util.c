@@ -11,6 +11,7 @@ char* recoit(SOCKET* sock);
 char * concatene(char* str, char c);
 char * str_concatene(char* str, char* strc);
 char** str_split(char* str, char delim);
+char* saisie();
 
 /************** les fonctions **************/
 
@@ -18,11 +19,11 @@ void creeSocket(SOCKET *sock, SOCKADDR_IN *ssin, char * addr, int port){
 	WSADATA	WSAData;
   	WSAStartup(MAKEWORD(2,2),&WSAData);
   	*sock = socket(AF_INET, SOCK_STREAM, 0);
-	*ssin.sin_addr.s_addr = inet_addr(addr);
-	*ssin.sin_family = AF_INET;
-	*ssin.sin_port = htons(port);
+	(*ssin).sin_addr.s_addr = inet_addr(addr);
+	(*ssin).sin_family = AF_INET;
+	(*ssin).sin_port = htons(port);
 	connect(*sock, (SOCKADDR*) ssin, sizeof(*ssin));
-	printf("Connexion au serveur %s: %d...\n",inet_ntoa(*ssin.sin_addr), PORT);
+	printf("Connexion au serveur %s: %d...\n",inet_ntoa((*ssin).sin_addr), port);
 }
 
 void fermeSocket(SOCKET sock){
@@ -32,22 +33,27 @@ void fermeSocket(SOCKET sock){
 }
 
 void envoie(char *msg, SOCKET sock){
-	int taille = (int)strlen(msg)+1;
-	if(send(sock, &taille, sizeof(taille), 0) != -1){
+	unsigned int taille = strlen(msg);
+	//char t [] = { taille };  
+	//if(send(sock, t, sizeof(taille), 0) != -1){
 		send(sock, msg, taille, 0);
-	}
+	
 }
 
-char* recoit(SOCKET* sock){
-	char *recu; 
-	int err, taille;
+char* recoit(SOCKET sock){
+	char recu [255];
+ 
+	unsigned int taille = 255;
+	int err = 2;
+//	char t [32] = "";
+	//recv(sock, t, 32, 0); //la taille des donnees
+	//taille = atoi(t[0]);
+	//if(err != -1){
+	
+	recv(sock, recu, taille, 0); //reception des donnees
+	
 
-	err=recv(sock, &taille, sizeof(taille), 0); //la taille des donnees
-	if(err != -1){
-		recv(sock, recu, sizeof(taille), 0); //reception des donnees
-	}
-
-	return res;
+	return recu;
 }
 
 char * concatene(char* str, char c){
@@ -99,3 +105,12 @@ char** str_split(char* str, char delim){
 	return tab_res;
 }
 
+char* saisie(){
+	char c;
+	char *res = "";
+	while((c=getchar()) != '\n' && c != '\r' && c != EOF){
+		res = concatene(res, c);
+	}
+	
+	return res;
+}
