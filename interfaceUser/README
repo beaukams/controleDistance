@@ -13,3 +13,8 @@ http://www.codeblocks.org/downloads/26
 http://sdz.tdct.org/sdz/creez-une-interface-avec-gtk.html#InstallerGTKsousWindows
 
 Lire le Tutoriel sur l'installation du GTK sous Windows. 
+
+Si vous etes pressés d'avoir un apercu, télécharger et lancer les executables. Lancer d'abord le serveur.exe puis ajouter 
+un client ou user via le bouton +. Ensuite vous pourrez vous loguer en lançant le testGTK.exe et vous connecter avec le username et
+mot de passe du User ajouté precedemment.
+
