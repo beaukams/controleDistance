@@ -44,6 +44,14 @@ static int read_msg(SOCKET sock, char *buffer)
    return n;
 }
 
+FILE* open_file(char* fil){
+
+FILE* fichier = fopen(fil, "r");
+	if(fichier == NULL)
+		printf("null");
+	return fichier;
+}
+
 /* envoyer un message*/
 static void write_msg(SOCKET sock, const char *buffer){
    if(send(sock, buffer, strlen(buffer), 0) < 0)
@@ -82,7 +90,7 @@ static int init_connection(const char *address, const int port){
       perror("connect()");
       exit(errno);
    }
-	printf("%d\n", sock);
+	
    return sock;
 }
 

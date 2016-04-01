@@ -16,56 +16,26 @@ typedef int socklen_t;
 
 #define CRLF "\r\n"
 #define BUF_SIZE 1024
+#define COM "COMMANDE "
 
 #define STDIN_FILENO 0
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
 #define MAX_USERS 5
 
-static int init_server(const int port);
-static void app(int port);
-
 typedef struct {
 	SOCKET sock;
+	char *nom;
+	char *base_dir;
+	char *base_file;
 }Utilisateur;
 
-void un_client(SOCKET *ssock){
-	char* msg= "";
-	char * com = "COMMANDE ";
-	SOCKET sock = (SOCKET) *ssock;
-	do{
-		msg = recoit(sock);
-		printf(" ");
-		fflush(stdin);
-		//fflush(stdout);
-		char *message = str_concatene(com,msg);
-		printf("Message: %s \n", message);
-	/*	system(message);
-
-		//lecture du resultat
-		FILE* fichier = fopen("fichierUser.txt", "r");
-		char *ch = "";
-		char* res = "";
-		while(fgets(ch, 1000, fichier) != NULL)
-			res = str_concatene(res, ch);
-		fflush(fichier);
-		fclose(fichier);
-		
-		//reponse
-		envoie(res, sock); 
-		
-		//reset
-		msg="";*/
-		
-	}while(strcmp(msg, "EXIT") || strcmp(msg, "exit"));
+static int init_server(const int port);
+static void app(int port, FILE* fich);
+void traitement(Utilisateur user, char* recu, FILE* fich);
 
 
-	//fermer la connexion
-	printf("fermeture de la socket client\n");
-	closesocket(sock);
 
-	//pthread_exit(NULL);
-}
 
 
 void main(int argc, char **args){
@@ -79,14 +49,48 @@ void main(int argc, char **args){
 		port = atoi(args[1]);
 	}
 	
-	app(port);
+	FILE* fichier = open_file("TMP_USER.TXT");
+	
+	app(port, fichier);
   	
 	WSACleanup();
 	
 }
 
+void traitement(Utilisateur user, char* recu, FILE* fichier){
+	
+	char *message = str_concatene(COM,recu);
+	
+	
+	//system(message);
 
-static void app(int port){
+	//lecture du resultat
+	
+	
+	
+	
+	if(fichier == NULL){
+		printf("ooo\n");
+	}else{
+		printf("mmslls\n");
+		char ch [1000] ;
+		char* res = "";
+		while(fgets(ch, 1000, fichier) != NULL){
+			res = str_concatene(res, ch);
+			printf("%s\n",res);
+		}
+		
+		//fflush(fichier);
+		fclose(fichier);
+	
+		char *msg = res;
+		printf("envoie: %s\n",msg);
+		write_msg(user.sock,  msg);
+	}
+	
+}
+
+static void app(int port, FILE* fich){
    SOCKET sock =  init_server(port);
    printf("Demarrage du serveur sur le port %d...\n", port);
    char buffer[BUF_SIZE];
@@ -133,12 +137,7 @@ static void app(int port){
 
 		 printf("Connexion au du client %s: %d...\n",inet_ntoa(csin.sin_addr), csin.sin_port);
 		 fflush(stdout);
-       /*  /* after connecting the client sends its name */
-    //     if(read_msg(csock, buffer) == -1)
-      //   {
-            /* disconnected */
-        //    continue;
-         //}
+       
 
          /* what is the new maximum fd ? */
          max = csock > max ? csock : max;
@@ -160,7 +159,7 @@ static void app(int port){
             {
                Utilisateur user = users[i];
                int c = read_msg(users[i].sock, buffer);
-			   printf("recu: %s", buffer);
+			   
                /* client disconnected */
                if(c == 0)
                {
@@ -168,10 +167,12 @@ static void app(int port){
                }
                else
                {
-                 
-					char* msg = "bien recu";
-					printf("envoie: %s\n",msg);
-					write_msg(user.sock,  msg);
+					printf("recu: %s", buffer);
+					
+					if(strlen(buffer)>0 && buffer != NULL)
+						traitement(user, buffer, fich);
+					
+					
                }
                break;
             }

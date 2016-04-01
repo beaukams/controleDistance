@@ -39,13 +39,13 @@ int main(int argc, char **argv)
       return EXIT_FAILURE;
    }
 
-   WSADATA	WSAData;
-  WSAStartup(MAKEWORD(2,2),&WSAData);
+	WSADATA	WSAData;
+	WSAStartup(MAKEWORD(2,2),&WSAData);
 	
-   app(argv[1], atoi(argv[2]));
+	app(argv[1], atoi(argv[2]));
 
 	WSACleanup();
-   return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
 
 static void app(const char *address, const int port){
@@ -53,23 +53,34 @@ static void app(const char *address, const int port){
    SOCKET sock = init_connection(address, port);
    char buffer[BUF_SIZE];
 
+   //envoie de login et de mot de passe
+ //  write_msg("login:abdoulaye");
+   
+   /* message de retour du serveur
+   * 	si authentification réussie : prompt + message de bienvenue
+   * 	sinon : message du type "veuillez vous authentifier"
+   */
+   
 
    while(1)
    {
 		fgets(buffer, BUF_SIZE - 1, stdin);
-        //fflush(stdin);
-        write_msg(sock, buffer);
-		printf("envoie: %s", buffer);
+		char* buff = buffer;
+        if( strlen(buff) > 1 && buffer != NULL && buffer != "\n" && buffer != "\0" && buffer != "\r"){
+			//fflush(stdin);
+			write_msg(sock, buffer);
+			//printf("envoie: %s", buffer);
          
       
-         int n = read_msg(sock, buffer);
-         /* server down */
-         if(n == 0)
-         {
-            printf("Server disconnected !\n");
-            break;
-         }
-         printf("recu: %s\n",buffer);
+			int n = read_msg(sock, buffer);
+			/* server down */
+			if(n == 0)
+			{
+				printf("Server disconnected !\n");
+				break;
+			}
+			printf("recu: %s\n",buffer);
+		}
       
    }
 
