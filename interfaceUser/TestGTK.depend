@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1459348790 source:c:\users\olympe\desktop\yupi\client_gui\main.cpp
+	<stdlib.h>
+	<gtk/gtk.h>
+	"filefunc.h"
+
+1459370632 c:\users\olympe\desktop\yupi\client_gui\filefunc.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+
