@@ -1,1 +1,15 @@
 Interface graphique utilisateur
+
+Pour tester les GUI developpés, il faudrait instaler GTK. L'environnement utilisé pour le developpement est codeBlocks16.01.
+
+
+1- Telecharger CodeBlocks
+http://www.codeblocks.org/downloads/26
+  
+  Choisir le 4eme lien avec compilateur.
+  
+
+2- Suivre les instructions sur ce lien 
+http://sdz.tdct.org/sdz/creez-une-interface-avec-gtk.html#InstallerGTKsousWindows
+
+Lire le Tutoriel sur l'installation du GTK sous Windows. 
