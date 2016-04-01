@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Server" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Server" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-mms-bitfields" />
+					<Add directory="C:/Program Files/Pack GTK+/include" />
+					<Add directory="C:/Program Files/Pack GTK+/include/atk" />
+					<Add directory="C:/Program Files/Pack GTK+/include/cairo" />
+					<Add directory="C:/Program Files/Pack GTK+/include/cairo/src" />
+					<Add directory="C:/Program Files/Pack GTK+/include/glib" />
+					<Add directory="C:/Program Files/Pack GTK+/include/glib/build" />
+					<Add directory="C:/Program Files/Pack GTK+/include/glib/glib" />
+					<Add directory="C:/Program Files/Pack GTK+/include/glib/gmodule" />
+					<Add directory="C:/Program Files/Pack GTK+/include/glib/gobject" />
+					<Add directory="C:/Program Files/Pack GTK+/include/glib/gthread" />
+					<Add directory="C:/Program Files/Pack GTK+/include/gtk+" />
+					<Add directory="C:/Program Files/Pack GTK+/include/gtk+/contrib" />
+					<Add directory="C:/Program Files/Pack GTK+/include/gtk+/gtk" />
+					<Add directory="C:/Program Files/Pack GTK+/include/gtk+/gdk" />
+					<Add directory="C:/Program Files/Pack GTK+/include/gtk+/gdk-pixbuf" />
+					<Add directory="C:/Program Files/Pack GTK+/include/gtk+/modules" />
+					<Add directory="C:/Program Files/Pack GTK+/include/libpng" />
+					<Add directory="C:/Program Files/Pack GTK+/include/libpng/contrib" />
+					<Add directory="C:/Program Files/Pack GTK+/include/pango" />
+					<Add directory="C:/Program Files/Pack GTK+/include/pango/modules" />
+					<Add directory="C:/Program Files/Pack GTK+/include/pango/pango" />
+					<Add directory="C:/Program Files/Pack GTK+/include iff" />
+					<Add directory="C:/Program Files/Pack GTK+/include iff/libtiff" />
+					<Add directory="C:/Program Files/Pack GTK+/lib/glib/include" />
+					<Add directory="C:/Program Files/Pack GTK+/lib/gtk+/include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="C:/Program Files/Pack GTK+/bin" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="libws2_32" />
+					<Add directory="C:/Program Files/Pack GTK+/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Server" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
