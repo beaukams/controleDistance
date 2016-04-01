@@ -1,0 +1,4 @@
+mama:passer:/home/mama
+Jonas:passer:/home/jonas
+Abdoul:passer:/home/abdoul
+Lolo:passer:/home/lolo
